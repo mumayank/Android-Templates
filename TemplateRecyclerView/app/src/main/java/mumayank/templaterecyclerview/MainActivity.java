@@ -1,11 +1,9 @@
 package mumayank.templaterecyclerview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
-import java.util.ArrayList;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,17 +12,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // create data
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        for (int i=0; i<1000; i++) {
-            arrayList.add(i);
-        }
+        findViewById(R.id.simple).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, mumayank.templaterecyclerview.simplerv.MainActivity.class));
+            }
+        });
 
-        // setup RV
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        MyRecyclerViewAdapter recyclerAdapter = new MyRecyclerViewAdapter(arrayList);
-        recyclerView.setAdapter(recyclerAdapter);
+        findViewById(R.id.threeItems).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, mumayank.templaterecyclerview.three_item_types.MainActivity.class));
+            }
+        });
     }
 
 }

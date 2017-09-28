@@ -1,4 +1,4 @@
-package mumayank.templaterecyclerview;
+package mumayank.templaterecyclerview.simplerv;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import mumayank.templaterecyclerview.R;
 
 /**
  * Created by Mayank on 28-09-2017.
@@ -37,7 +39,7 @@ class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // create view if not available
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_row, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.simplerv_item, parent, false);
         return new MyViewHolder(view);
     }
 
