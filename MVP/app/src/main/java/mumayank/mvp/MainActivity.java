@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements MainInterfaces.Vi
 
         ButterKnife.bind(this);
 
-        mainPresenter = new MainPresenter(this);
         checkPermissionAndProceed();
     }
 
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainInterfaces.Vi
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, PERMISSIONS_REQUEST_READ_SMS);
             }
         } else {
-            mainPresenter.fetchData();
+            proceed();
         }
     }
 
@@ -93,8 +92,28 @@ public class MainActivity extends AppCompatActivity implements MainInterfaces.Vi
         System.exit(0);
     }
 
+    private void proceed() {
+        mainPresenter = (MainPresenter) getLastCustomNonConfigurationInstance();
+
+        if (mainPresenter == null) {
+            mainPresenter = new MainPresenter(this);
+            mainPresenter.fetchData();
+        } else {
+            mainPresenter.attachView(this);
+            if (mainPresenter.getItems() != null) {
+                showData(mainPresenter.getItems());
+            }
+        }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mainPresenter;
+    }
+
     @Override
     protected void onDestroy() {
+        mainPresenter.detachView();
         mainPresenter.stopAsyncTask();
         super.onDestroy();
     }

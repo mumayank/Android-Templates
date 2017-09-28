@@ -14,9 +14,19 @@ class MainPresenter {
     private MainInterfaces.Model model;
     private BgAsyncTask bgAsyncTask;
 
+    private ArrayList<Item> customizedItems;
+
     MainPresenter(MainInterfaces.View view) {
         this.view = view;
         model = new SmsHelper();
+    }
+
+    void attachView(MainInterfaces.View view) {
+        this.view = view;
+    }
+
+    void detachView() {
+        this.view = null;
     }
 
     void fetchData() {
@@ -30,9 +40,11 @@ class MainPresenter {
         }
     }
 
-    private class BgAsyncTask extends AsyncTask<Void, Void, Void> {
+    ArrayList<Item> getItems() {
+        return customizedItems;
+    }
 
-        ArrayList<Item> customizedItems;
+    private class BgAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -53,7 +65,9 @@ class MainPresenter {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            view.showData(customizedItems);
+            if (view != null) {
+                view.showData(customizedItems);
+            }
         }
     }
 
